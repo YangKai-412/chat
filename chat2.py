@@ -9,6 +9,7 @@ def read_file(filename):
 
 #convert 轉換
 def convert(lines): 
+	end = []
 	person = None  #預設值設定為 None ＝ 無
 	Allen_word_count = 0 #Allen_字_計數
 	Viki_word_count = 0  #Viki_字_計數
@@ -43,18 +44,25 @@ def convert(lines):
 	print('Viki說了', Viki_word_count, '個字')
 	print('Viki傳了', Viki_sticker_count, '個貼圖')
 	print('Viki傳了', Viki_image_count, '張圖片')
-		
+	
+	end.append(['Allen說了', Allen_word_count, '個字'])
+	end.append(['Allen傳了', Allen_sticker_count, '個貼圖'])
+	end.append(['Allen傳了', Allen_image_count, '張圖片'])
 
+	end.append(['Viki說了', Viki_word_count, '個字'])
+	end.append(['Viki傳了', Viki_sticker_count, '個貼圖'])
+	end.append(['Viki傳了', Viki_image_count, '張圖片'])
+	return end
 #寫入檔案
-def write_file(filename, lines):
-	with open(filename, 'w') as f:
-		for line in lines:
-			f.write(line + '\n')
+def write_file(filename, end):
+	with open(filename, 'w', encoding='utf-8-sig') as f:
+		for line in end:
+			f.write(str(line[0]) + ',' + str(line[1]) + ',' + str(line[2]) + '\n')
 
 def main():
 	lines = read_file('LINE-Viki.txt') #投入參數後 filename 就會轉換成參數可以隨意讀取各種檔案
-	lines = convert(lines) #把上一個 lines 轉換完後在存回 lines 
-	#write_file('output.txt', lines) 
+	end = convert(lines) #把上一個 lines 轉換完後在存回 lines 
+	write_file('output1.csv', end) 
 
 main()
 
